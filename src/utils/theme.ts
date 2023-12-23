@@ -14,5 +14,9 @@ export const colors = {
   purpleDark: "#5e69ce",
   purple: "#8284fa",
   darnger: "#e25858",
-  ...gray,
+  gray: gray,
 };
+
+export default {
+  colors,
+}
