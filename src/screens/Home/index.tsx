@@ -3,16 +3,8 @@ import { View, Text, StyleSheet } from "react-native";
 
 export function Home() {
   return (
-    <View style={s.container}>
-      <Text>Home</Text>
+    <View className="flex-1 bg-neutral-800">
+      <Text className="text-neutral-50 font-bold">Home</Text>
     </View>
   )
 }
-
-const s = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
