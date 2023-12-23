@@ -2,16 +2,6 @@
 import { atomWithStorage } from "jotai/utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-type Task = {
-  id: string;
-  title: string;
-  completed: boolean;
-  date: {
-    created: string;
-    completed: string;
-  };
-};
-
 export const taskListAtom = atomWithStorage<Task[]>("taskList", [], {
   setItem: async (key, newValue) => {
     try {
