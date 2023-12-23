@@ -21,6 +21,8 @@ export const useTask = (id: string) => {
     return taskList.find((task) => task.id === id);
   };
 
+  const data = getTask();
+
   /**
    * Mark the task as completed.
    */
@@ -37,6 +39,36 @@ export const useTask = (id: string) => {
   };
 
   /**
+   * Mark the task as uncompleted.
+   */
+
+  const unCompleteTask = () => {
+    const newTaskList = taskList.map((task) => {
+      if (task.id === id) {
+        task.completed = false;
+        task.date.completed = "";
+      }
+      return task;
+    });
+    setTaskList(() => [...newTaskList]);
+  };
+
+  /**
+   * Toggle the task as completed or uncompleted.
+   */
+
+  const toggleTask = () => {
+    const newTaskList = taskList.map((task) => {
+      if (task.id === id) {
+        task.completed = !task.completed;
+        task.date.completed = task.completed ? new Date().toISOString() : "";
+      }
+      return task;
+    });
+    setTaskList(() => [...newTaskList]);
+  };
+
+  /**
    * Delete the task from the task list.
    */
 
@@ -46,8 +78,10 @@ export const useTask = (id: string) => {
   };
 
   return {
-    getTask,
+    data,
     completeTask,
+    unCompleteTask,
+    toggleTask,
     deleteTask,
   };
 };

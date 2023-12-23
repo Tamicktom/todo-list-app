@@ -1,7 +1,7 @@
 //* Libraries imports
 import { Suspense } from "react";
 import { View, Text, SafeAreaView, StatusBar, Pressable, FlatList } from "react-native";
-import { Plus } from "phosphor-react-native";
+import { Plus, CheckCircle, Circle, Trash } from "phosphor-react-native";
 
 //* Components imports
 import * as Button from "../../components/Button";
@@ -43,20 +43,38 @@ function TaskList() {
       data={taskList}
       keyExtractor={item => item.id}
       renderItem={({ item }) => (
-        <TaskItem task={item} />
+        <TaskItem id={item.id} />
       )}
     />
   )
 }
 
 type TaskItemProps = {
-  task: Task;
+  id: string;
 }
 
 function TaskItem(props: TaskItemProps) {
+  const task = useTask(props.id);
+
   return (
-    <View>
-      <Text style={{ color: "white" }}>{props.task.title}</Text>
+    <View style={{
+      width: "100%",
+      display: "flex",
+      flexDirection: "row",
+    }}>
+      {
+        task.data.completed
+          ? <Pressable onPress={task.unCompleteTask}>
+            <CheckCircle size={24} color={theme.colors.blue} />
+          </Pressable>
+          : <Pressable onPress={task.completeTask}>
+            <Circle size={24} color={theme.colors.purple} />
+          </Pressable>
+      }
+      <Text style={{ color: "white" }}>{task.data.title}</Text>
+      <Pressable onPress={task.deleteTask}>
+        <Trash size={24} color={theme.colors.darnger} />
+      </Pressable>
     </View>
   );
 }
