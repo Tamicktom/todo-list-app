@@ -3,7 +3,7 @@ import { View, Text, SafeAreaView, StatusBar, Pressable } from "react-native";
 import { Plus } from "phosphor-react-native";
 
 //* Components imports
-import { Create } from "../../components/Button";
+import * as Button from "../../components/Button";
 
 //* Local imports
 import theme from "../../utils/theme";
@@ -19,7 +19,7 @@ export function Home() {
       <StatusBar translucent animated barStyle="light-content" />
       <Header />
 
-      <Create />
+      <Button.Create />
     </SafeAreaView>
   )
 }

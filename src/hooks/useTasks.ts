@@ -28,7 +28,7 @@ export const useTasks = () => {
         completed: "",
       },
     };
-    setTaskList((prev) => [...prev, newTask]);
+    setTaskList(async (prev) => [...(await prev), newTask]);
   };
 
   /**
