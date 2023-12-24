@@ -114,7 +114,6 @@ const styles = StyleSheet.create({
   },
   titleWrapper: {
     flex: 1,
-    backgroundColor: "blue",
     overflow: "hidden",
   },
   titleContainer: {
@@ -123,12 +122,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginHorizontal: 16,
-    backgroundColor: "red",
   },
   title: {
     color: "white",
     width: "100%",
-    backgroundColor: "green",
     textAlign: "left",
     height: "auto",
     padding: 4,
