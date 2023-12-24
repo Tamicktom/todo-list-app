@@ -3,6 +3,7 @@ import { FlatList, StyleSheet } from "react-native";
 
 //* Components imports
 import { TaskItem } from "./_components/TaskItem";
+import { EmptyTaskList } from "./_components/EmptyTaskList";
 
 //* Hooks imports
 import { useTasks } from "../../hooks/useTasks";
@@ -25,6 +26,7 @@ export function TaskList() {
       contentContainerStyle={styles.content}
       renderItem={prop => <TaskItem id={prop.item.id} />}
       style={styles.container}
+      ListEmptyComponent={<EmptyTaskList />}
     />
   )
 }

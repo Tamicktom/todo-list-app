@@ -9,6 +9,8 @@ import { useTasks } from "../../hooks/useTasks";
 
 /**
  * This component is the header of the app. It shows the number of tasks created and completed.
+ * 
+ * It uses the {@link useTasks} hook to get the list of tasks.
  */
 
 export function Header() {
@@ -45,6 +47,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
+    gap: 8,
   },
   taskLabelLeft: {
     fontSize: 24,
@@ -59,5 +62,9 @@ const styles = StyleSheet.create({
   taskCount: {
     fontSize: 24,
     color: "white",
+    backgroundColor: theme.colors.gray[500],
+    paddingVertical: 2,
+    paddingHorizontal: 8,
+    borderRadius: 8,
   },
 });
