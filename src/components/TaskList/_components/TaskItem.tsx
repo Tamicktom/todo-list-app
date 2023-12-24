@@ -1,6 +1,8 @@
 //* Libraries imports
+import { useEffect, useState } from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import { CheckCircle, Circle, Trash } from "phosphor-react-native";
+import Animated, { useSharedValue, useAnimatedStyle, withTiming, withSpring, Layout } from "react-native-reanimated";
 
 //* Local imports
 import theme from "../../../utils/theme";
@@ -23,33 +25,70 @@ type TaskItemProps = {
  */
 
 export function TaskItem(props: TaskItemProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
   const task = useTask(props.id);
+  const opacity = useSharedValue(0);
+  const scaleY = useSharedValue(0);
+
+  useEffect(() => {
+    opacity.value = withTiming(1, { duration: 500 });
+    scaleY.value = withSpring(1, { damping: 10 });
+  }, []);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: opacity.value,
+      transform: [
+        {
+          scaleY: scaleY.value,
+        }
+      ]
+    };
+  });
+
+  const handleDeleteTask = () => {
+    opacity.value = withTiming(0, { duration: 500 });
+    scaleY.value = withSpring(0, { damping: 10 });
+    setTimeout(() => {
+      task.deleteTask();
+    }, 500);
+  }
 
   return (
-    <View style={styles.container}>
-      <Pressable onPress={task.toggleTask} style={styles.checkButton}>
-        {
-          task.data.completed
-            ? <CheckCircle size={24} color={theme.colors.blue} />
-            : <Circle size={24} color={theme.colors.purple} />
-        }
-      </Pressable>
-      <View style={styles.titleContainer}>
-        <Text
-          style={[
-            styles.title,
-            {
-              textDecorationLine: task.data.completed ? "line-through" : "none",
-            },
-          ]}
+    <Animated.View style={[styles.container, animatedStyle]} layout={Layout.duration(500)}>
+      <Animated.View style={{ height: isOpen ? "auto" : 40 }} layout={Layout.duration(500)}>
+        <Pressable onPress={task.toggleTask} style={styles.checkButton}>
+          {
+            task.data.completed
+              ? <CheckCircle size={24} color={theme.colors.blue} />
+              : <Circle size={24} color={theme.colors.purple} />
+          }
+        </Pressable>
+      </Animated.View>
+      <Animated.View style={[styles.titleWrapper, { height: isOpen ? "auto" : 40 }]} layout={Layout.duration(500)}>
+        <Pressable
+          style={[styles.titleContainer]}
+          onPress={() => setIsOpen((prev) => !prev)}
         >
-          {task.data.title}
-        </Text>
-      </View>
-      <Pressable onPress={task.deleteTask} style={styles.deleteButton}>
-        <Trash size={24} color={theme.colors.gray[300]} />
-      </Pressable>
-    </View>
+          <Text
+            style={[
+              styles.title,
+              {
+                textDecorationLine: task.data.completed ? "line-through" : "none",
+              },
+            ]}
+          >
+            {task.data.title}
+          </Text>
+        </Pressable>
+      </Animated.View>
+      <Animated.View style={{ height: isOpen ? "auto" : 40 }} layout={Layout.duration(500)}>
+        <Pressable onPress={handleDeleteTask} style={styles.deleteButton}>
+          <Trash size={24} color={theme.colors.gray[300]} />
+        </Pressable>
+      </Animated.View>
+    </Animated.View>
   );
 }
 
@@ -73,15 +112,26 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 8,
   },
+  titleWrapper: {
+    flex: 1,
+    backgroundColor: "blue",
+    overflow: "hidden",
+  },
   titleContainer: {
     flex: 1,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     marginHorizontal: 16,
+    backgroundColor: "red",
   },
   title: {
     color: "white",
+    width: "100%",
+    backgroundColor: "green",
+    textAlign: "left",
+    height: "auto",
+    padding: 4,
   },
   deleteButton: {
     display: "flex",
