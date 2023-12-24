@@ -1,5 +1,6 @@
 //* Libraries imports
 import { FlatList, StyleSheet } from "react-native";
+import Animated, { Layout, Easing } from "react-native-reanimated";
 
 //* Components imports
 import { TaskItem } from "./_components/TaskItem";
@@ -20,13 +21,15 @@ export function TaskList() {
   const { taskList } = useTasks();
 
   return (
-    <FlatList
+    <Animated.FlatList
       data={taskList}
       keyExtractor={item => item.id}
       contentContainerStyle={styles.content}
       renderItem={prop => <TaskItem id={prop.item.id} />}
       style={styles.container}
       ListEmptyComponent={<EmptyTaskList />}
+      layout={Layout.duration(500).easing(Easing.inOut(Easing.ease))}
+      extraData={taskList}
     />
   )
 }

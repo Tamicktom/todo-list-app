@@ -60,6 +60,7 @@ export function CreateTaskModal(props: CreateTaskModalProps) {
               placeholderTextColor={theme.colors.gray[300]}
               value={taskTitle}
               onChangeText={setTaskTitle}
+              multiline
             />
 
             <Primitive onPress={handleCreateTask}>
@@ -127,5 +128,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: theme.colors.gray[300],
     color: "white",
+    fontSize: 16,
+    height: "auto",
+    textAlignVertical: "top",
+    textAlign: "left",
   },
 });

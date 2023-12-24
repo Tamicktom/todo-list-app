@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Text, Pressable, StyleSheet } from "react-native";
 import { CheckCircle, Circle, Trash } from "phosphor-react-native";
-import Animated, { useSharedValue, useAnimatedStyle, withTiming, withSpring, Layout } from "react-native-reanimated";
+import Animated, { useSharedValue, useAnimatedStyle, withTiming, withSpring, Layout, Easing } from "react-native-reanimated";
 
 //* Local imports
 import theme from "../../../utils/theme";
@@ -30,10 +30,12 @@ export function TaskItem(props: TaskItemProps) {
   const task = useTask(props.id);
   const opacity = useSharedValue(0);
   const scaleY = useSharedValue(0);
+  const translateY = useSharedValue(0);
 
   useEffect(() => {
-    opacity.value = withTiming(1, { duration: 500 });
+    opacity.value = withTiming(1, { duration: 250 });
     scaleY.value = withSpring(1, { damping: 10 });
+    translateY.value = withTiming(0, { duration: 250 });
   }, []);
 
   const animatedStyle = useAnimatedStyle(() => {
@@ -42,22 +44,26 @@ export function TaskItem(props: TaskItemProps) {
       transform: [
         {
           scaleY: scaleY.value,
+        },
+        {
+          translateY: translateY.value,
         }
-      ]
+      ],
     };
   });
 
   const handleDeleteTask = () => {
-    opacity.value = withTiming(0, { duration: 500 });
+    opacity.value = withTiming(0, { duration: 240 });
+    translateY.value = withTiming(-100, { duration: 250 });
     scaleY.value = withSpring(0, { damping: 10 });
     setTimeout(() => {
       task.deleteTask();
-    }, 500);
+    }, 250);
   }
 
   return (
-    <Animated.View style={[styles.container, animatedStyle]} layout={Layout.duration(500)}>
-      <Animated.View style={{ height: isOpen ? "auto" : 40 }} layout={Layout.duration(500)}>
+    <Animated.View style={[styles.container, animatedStyle]} layout={Layout.duration(250).easing(Easing.inOut(Easing.ease))}>
+      <Animated.View style={{ height: isOpen ? "auto" : 40 }} layout={Layout.duration(250).easing(Easing.inOut(Easing.ease))}>
         <Pressable onPress={task.toggleTask} style={styles.checkButton}>
           {
             task.data.completed
@@ -66,7 +72,7 @@ export function TaskItem(props: TaskItemProps) {
           }
         </Pressable>
       </Animated.View>
-      <Animated.View style={[styles.titleWrapper, { height: isOpen ? "auto" : 40 }]} layout={Layout.duration(500)}>
+      <Animated.View style={[styles.titleWrapper, { height: isOpen ? "auto" : 40 }]} layout={Layout.duration(250).easing(Easing.inOut(Easing.ease))}>
         <Pressable
           style={[styles.titleContainer]}
           onPress={() => setIsOpen((prev) => !prev)}
@@ -83,7 +89,7 @@ export function TaskItem(props: TaskItemProps) {
           </Text>
         </Pressable>
       </Animated.View>
-      <Animated.View style={{ height: isOpen ? "auto" : 40 }} layout={Layout.duration(500)}>
+      <Animated.View style={{ height: isOpen ? "auto" : 40 }} layout={Layout.duration(250).easing(Easing.inOut(Easing.ease))}>
         <Pressable onPress={handleDeleteTask} style={styles.deleteButton}>
           <Trash size={24} color={theme.colors.gray[300]} />
         </Pressable>
