@@ -18,7 +18,6 @@ export function Home() {
     <SafeAreaView style={{
       flex: 1,
       backgroundColor: theme.colors.gray[700],
-      padding: 16,
       position: "relative",
     }}>
       <StatusBar translucent animated barStyle="light-content" />
@@ -42,9 +41,17 @@ function TaskList() {
     <FlatList
       data={taskList}
       keyExtractor={item => item.id}
+      contentContainerStyle={{
+        gap: 8,
+        paddingHorizontal: 16,
+        paddingBottom: 96,
+      }}
       renderItem={({ item }) => (
         <TaskItem id={item.id} />
       )}
+      style={{
+        flex: 1,
+      }}
     />
   )
 }
@@ -58,22 +65,58 @@ function TaskItem(props: TaskItemProps) {
 
   return (
     <View style={{
-      width: "100%",
+      flex: 1,
       display: "flex",
       flexDirection: "row",
+      backgroundColor: theme.colors.gray[500],
+      alignItems: "center",
+      justifyContent: "space-between",
+      padding: 12,
+      borderRadius: 8,
+      borderColor: theme.colors.gray[500],
+      borderWidth: 1,
+      gap: 8,
     }}>
-      {
-        task.data.completed
-          ? <Pressable onPress={task.unCompleteTask}>
-            <CheckCircle size={24} color={theme.colors.blue} />
-          </Pressable>
-          : <Pressable onPress={task.completeTask}>
-            <Circle size={24} color={theme.colors.purple} />
-          </Pressable>
-      }
-      <Text style={{ color: "white" }}>{task.data.title}</Text>
-      <Pressable onPress={task.deleteTask}>
-        <Trash size={24} color={theme.colors.darnger} />
+      <Pressable onPress={task.toggleTask}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 8,
+        }}
+      >
+        {
+          task.data.completed
+            ? <CheckCircle size={24} color={theme.colors.blue} />
+            : <Circle size={24} color={theme.colors.purple} />
+        }
+      </Pressable>
+      <View style={{
+        flex: 1,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        marginHorizontal: 16,
+      }}>
+        <Text
+          style={{
+            color: "white",
+            textDecorationLine: task.data.completed ? "line-through" : "none",
+          }}
+        >
+          {task.data.title}
+        </Text>
+      </View>
+      <Pressable
+        onPress={task.deleteTask}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 8,
+        }}
+      >
+        <Trash size={24} color={theme.colors.gray[300]} />
       </Pressable>
     </View>
   );

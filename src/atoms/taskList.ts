@@ -2,6 +2,10 @@
 import { atomWithStorage } from "jotai/utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+/**
+ * The atom to manage the task list. It is stored in the local storage.
+ */
+
 export const taskListAtom = atomWithStorage<Task[]>("taskList", [], {
   setItem: async (key, newValue) => {
     try {

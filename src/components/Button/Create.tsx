@@ -16,14 +16,20 @@ export function Create() {
   const closeModal = () => setIsModalVisible(false);
 
   return (
-    <>
+    <View style={{
+      width: "100%",
+      position: "absolute",
+      bottom: 0,
+      left: 0,
+      padding: 16,
+    }}>
       <Pressable style={{
-        position: "absolute",
-        bottom: 16,
-        right: 16,
         backgroundColor: theme.colors.blue,
         borderRadius: 100,
         padding: 8,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
         onPress={() => setIsModalVisible(true)}
       >
@@ -32,7 +38,7 @@ export function Create() {
       <Suspense>
         <CreateTaskModal isVisible={isModalVisible} closeModal={closeModal} />
       </Suspense>
-    </>
+    </View>
   )
 }
 
@@ -64,7 +70,6 @@ function CreateTaskModal(props: CreateTaskModalProps) {
     >
       <View style={{
         flex: 1,
-        backgroundColor: "red",
         position: "relative",
         justifyContent: "flex-end",
         alignItems: "center",
@@ -76,7 +81,6 @@ function CreateTaskModal(props: CreateTaskModalProps) {
           position: "absolute",
           top: 0,
           left: 0,
-          backgroundColor: "yellow",
           zIndex: 0,
         }}>
           <Pressable style={{
