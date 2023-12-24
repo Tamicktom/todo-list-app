@@ -1,6 +1,6 @@
 //* Libraries imports
 import { useEffect, useState } from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { Text, Pressable, StyleSheet } from "react-native";
 import { CheckCircle, Circle, Trash } from "phosphor-react-native";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, withSpring, Layout } from "react-native-reanimated";
 
