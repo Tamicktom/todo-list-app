@@ -19,6 +19,7 @@ export function Home() {
       flex: 1,
       backgroundColor: theme.colors.gray[700],
       position: "relative",
+      paddingTop: StatusBar.currentHeight,
     }}>
       <StatusBar translucent animated barStyle="light-content" />
       <Suspense>
@@ -129,9 +130,10 @@ function Header() {
     <View style={{
       display: "flex",
       alignItems: "center",
-      justifyContent: "center",
+      justifyContent: "space-between",
       flexDirection: "row",
-      paddingTop: 16,
+      width: "100%",
+      padding: 16,
     }}>
       <View style={{
         display: "flex",
@@ -141,7 +143,8 @@ function Header() {
       }}>
         <Text style={{
           fontSize: 24,
-          color: "white",
+          color: theme.colors.blue,
+          fontWeight: "bold",
         }}>Criadas</Text>
         <Text style={{
           fontSize: 24,
@@ -158,7 +161,8 @@ function Header() {
       }}>
         <Text style={{
           fontSize: 24,
-          color: "white",
+          color: theme.colors.purple,
+          fontWeight: "bold",
         }}>Concluidas</Text>
         <Text style={{
           fontSize: 24,
